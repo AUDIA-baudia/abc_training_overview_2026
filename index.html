@@ -4,230 +4,1263 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Hive and the Honey | ABC 2026 Vision</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #FFC107;
-            --dark-amber: #B45309;
-            --hive-black: #1A1A1A;
-            --soft-white: #F9FAFB;
-            --glass: rgba(255, 255, 255, 0.05);
+            --gold: #F6A623;
+            --gold-light: #FFD166;
+            --gold-dark: #C17F00;
+            --amber: #E85D04;
+            --honey: #FFBA08;
+            --cream: #FFF8E7;
+            --warm-white: #FAF3E0;
+            --deep-orange: #DC2F02;
+            --burnt-sienna: #9D0208;
+            --teal: #14B8A6;
+            --teal-dark: #0D9488;
+            --black: #0A0A0A;
+            --charcoal: #141414;
+            --slate: #1E1E1E;
+            --muted: #9CA3AF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--hive-black);
-            color: var(--soft-white);
-            line-height: 1.6;
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--black);
+            color: var(--cream);
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
+        /* Large Honeycomb Background Pattern */
+        .honeycomb-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.08;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='150' viewBox='0 0 84 150'%3E%3Cg fill='none' stroke='%23F6A623' stroke-width='1.5'%3E%3Cpath d='M42 0L84 25v50L42 100 0 75V25L42 0z'/%3E%3Cpath d='M42 50L84 75v50l-42 25L0 125V75l42-25z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 84px 150px;
+        }
+
+        /* Floating Hexagons */
+        .floating-hexagons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .hex {
+            position: absolute;
+            width: 60px;
+            height: 69px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--amber) 100%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            opacity: 0.06;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .hex:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; width: 80px; height: 92px; }
+        .hex:nth-child(2) { top: 60%; left: 90%; animation-delay: -5s; width: 50px; height: 58px; }
+        .hex:nth-child(3) { top: 30%; left: 85%; animation-delay: -10s; width: 100px; height: 115px; }
+        .hex:nth-child(4) { top: 80%; left: 10%; animation-delay: -15s; width: 70px; height: 81px; }
+        .hex:nth-child(5) { top: 45%; left: 3%; animation-delay: -7s; width: 40px; height: 46px; }
+        .hex:nth-child(6) { top: 15%; left: 70%; animation-delay: -12s; width: 90px; height: 104px; }
+        .hex:nth-child(7) { top: 70%; left: 60%; animation-delay: -3s; width: 55px; height: 63px; }
+        .hex:nth-child(8) { top: 5%; left: 40%; animation-delay: -18s; width: 65px; height: 75px; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(20px) rotate(-5deg); }
+        }
+
+        /* Gradient Mesh Overlay */
+        .gradient-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(246, 166, 35, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(232, 93, 4, 0.1) 0%, transparent 40%),
+                radial-gradient(ellipse at 70% 80%, rgba(20, 184, 166, 0.08) 0%, transparent 40%),
+                radial-gradient(ellipse at 10% 70%, rgba(255, 186, 8, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Hero Section */
         header {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: radial-gradient(circle at center, #2c2c2c 0%, #1a1a1a 100%);
+            padding: 40px 20px;
             position: relative;
         }
 
+        /* Large decorative hexagon behind hero */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 692px;
+            background: linear-gradient(180deg, rgba(246, 166, 35, 0.05) 0%, rgba(232, 93, 4, 0.03) 100%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            z-index: -1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, rgba(246, 166, 35, 0.2) 0%, rgba(232, 93, 4, 0.1) 100%);
+            border: 1px solid rgba(246, 166, 35, 0.4);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 30px;
+            animation: fadeInDown 0.8s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        .hero-badge:hover {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.3) 0%, rgba(13, 148, 136, 0.2) 100%);
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(246, 166, 35, 0.4); }
+            50% { opacity: 0.8; transform: scale(1.2); box-shadow: 0 0 20px 5px rgba(246, 166, 35, 0.2); }
+        }
+
+        /* Branson Quote - Top */
+        .branson-banner {
+            max-width: 800px;
+            margin-bottom: 50px;
+            padding: 24px 40px;
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(13, 148, 136, 0.05) 100%);
+            border: 1px solid rgba(20, 184, 166, 0.3);
+            border-radius: 16px;
+            animation: fadeInUp 1s ease-out 0.1s both;
+            transition: all 0.4s ease;
+        }
+
+        .branson-banner:hover {
+            background: linear-gradient(135deg, rgba(232, 93, 4, 0.2) 0%, rgba(220, 47, 2, 0.1) 100%);
+            border-color: var(--amber);
+            transform: scale(1.02);
+        }
+
+        .branson-pills {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .branson-pill {
+            padding: 8px 20px;
+            background: rgba(20, 184, 166, 0.2);
+            border: 1px solid rgba(20, 184, 166, 0.4);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--teal);
+            transition: all 0.3s ease;
+        }
+
+        .branson-pill:hover {
+            background: var(--teal);
+            color: var(--black);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(20, 184, 166, 0.3);
+        }
+
+        .branson-divider {
+            font-size: 1.2rem;
+            color: var(--muted);
+        }
+
+        .branson-credit {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
         .hero-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 5rem;
-            margin: 0;
-            background: linear-gradient(to right, var(--gold), #FFF);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.5rem, 12vw, 8rem);
+            font-weight: 700;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 40%, var(--amber) 70%, var(--honey) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 800;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out 0.2s both;
+            text-shadow: 0 0 80px rgba(246, 166, 35, 0.3);
         }
 
         .hero-subtitle {
-            font-size: 1.5rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-top: 10px;
+            font-size: 1.4rem;
+            color: var(--muted);
+            font-weight: 400;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .hero-subtitle span {
             color: var(--gold);
+            font-weight: 600;
         }
 
-        .quote-box {
-            margin-top: 50px;
-            max-width: 700px;
+        .quote-container {
+            max-width: 750px;
+            padding: 50px;
+            background: linear-gradient(145deg, rgba(30, 30, 30, 0.9) 0%, rgba(20, 20, 20, 0.95) 100%);
+            border-radius: 24px;
+            border: 1px solid rgba(246, 166, 35, 0.2);
+            position: relative;
+            animation: fadeInUp 1s ease-out 0.6s both;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .quote-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--amber), var(--honey));
+        }
+
+        .quote-container::after {
+            content: '"';
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 12rem;
+            position: absolute;
+            top: -30px;
+            left: 20px;
+            background: linear-gradient(180deg, var(--gold) 0%, var(--amber) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.15;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .quote-container:hover {
+            border-color: var(--teal);
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(20, 184, 166, 0.15);
+        }
+
+        .quote-container:hover::before {
+            background: linear-gradient(90deg, var(--teal), var(--teal-dark), var(--gold));
+        }
+
+        .quote-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
             font-style: italic;
-            border-left: 3px solid var(--gold);
-            padding-left: 20px;
-            font-size: 1.2rem;
-            color: #ccc;
+            color: rgba(255, 248, 231, 0.95);
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
         }
 
+        .quote-author {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        /* Section Styles */
         .section {
+            padding: 140px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 20px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--teal), var(--gold));
+            border-radius: 2px;
+        }
+
+        .section-label::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--amber);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.8rem, 7vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-intro {
+            font-size: 1.2rem;
+            color: var(--muted);
+            max-width: 650px;
+            margin-bottom: 70px;
+            line-height: 1.8;
+        }
+
+        /* Honey Definition Section */
+        .honey-definition {
+            text-align: center;
             padding: 100px 20px;
-            max-width: 1100px;
+            background: linear-gradient(180deg, rgba(246, 166, 35, 0.03) 0%, transparent 50%, rgba(20, 184, 166, 0.03) 100%);
+            position: relative;
+        }
+
+        .honey-definition::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 92px;
+            background: linear-gradient(180deg, var(--gold) 0%, var(--amber) 100%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            opacity: 0.15;
+        }
+
+        .honey-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 600;
+            color: var(--cream);
+            max-width: 800px;
+            margin: 60px auto 50px;
+            line-height: 1.5;
+        }
+
+        .honey-tagline em {
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        .honey-flows {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            text-align: center;
-            margin-bottom: 50px;
+        .honey-flow-item {
+            flex: 1;
+            min-width: 200px;
+            max-width: 280px;
+            padding: 30px;
+            background: linear-gradient(145deg, var(--charcoal) 0%, var(--slate) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
         }
 
-        .grid {
+        .honey-flow-item:nth-child(1) { border-top: 3px solid var(--gold); }
+        .honey-flow-item:nth-child(2) { border-top: 3px solid var(--amber); }
+        .honey-flow-item:nth-child(3) { border-top: 3px solid var(--teal); }
+        .honey-flow-item:nth-child(4) { border-top: 3px solid var(--honey); }
+
+        .honey-flow-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .honey-flow-item:nth-child(1):hover { border-color: var(--gold); }
+        .honey-flow-item:nth-child(2):hover { border-color: var(--amber); }
+        .honey-flow-item:nth-child(3):hover { border-color: var(--teal); }
+        .honey-flow-item:nth-child(4):hover { border-color: var(--honey); }
+
+        .honey-flow-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .honey-flow-item:nth-child(1) .honey-flow-title { color: var(--gold); }
+        .honey-flow-item:nth-child(2) .honey-flow-title { color: var(--amber); }
+        .honey-flow-item:nth-child(3) .honey-flow-title { color: var(--teal); }
+        .honey-flow-item:nth-child(4) .honey-flow-title { color: var(--honey); }
+
+        .honey-flow-text {
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* Framework Cards */
+        .framework-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 30px;
         }
 
-        .card {
-            background: var(--glass);
-            padding: 40px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            transition: transform 0.3s ease;
+        .framework-card {
+            background: linear-gradient(160deg, var(--charcoal) 0%, var(--slate) 100%);
+            border-radius: 28px;
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .card:hover {
-            transform: translateY(-10px);
+        .framework-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--amber));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        /* Hexagon decoration */
+        .framework-card::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 120px;
+            height: 138px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--amber) 100%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            opacity: 0.03;
+            transition: all 0.5s ease;
+        }
+
+        .framework-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(246, 166, 35, 0.3);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                0 0 80px rgba(246, 166, 35, 0.1);
+        }
+
+        .framework-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .framework-card:hover::after {
+            opacity: 0.08;
+            transform: scale(1.2);
+        }
+
+        .framework-card:nth-child(1):hover {
             border-color: var(--gold);
         }
+        .framework-card:nth-child(1):hover::before {
+            background: linear-gradient(90deg, var(--gold), var(--honey));
+        }
 
-        .card h3 {
+        .framework-card:nth-child(2):hover {
+            border-color: var(--amber);
+        }
+        .framework-card:nth-child(2):hover::before {
+            background: linear-gradient(90deg, var(--amber), var(--deep-orange));
+        }
+
+        .framework-card:nth-child(3):hover {
+            border-color: var(--teal);
+        }
+        .framework-card:nth-child(3):hover::before {
+            background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+        }
+        .framework-card:nth-child(3):hover::after {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+        }
+
+        .card-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(180deg, var(--gold) 0%, var(--amber) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0.12;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            line-height: 1;
+            transition: all 0.4s ease;
+        }
+
+        .framework-card:hover .card-number {
+            opacity: 0.25;
+        }
+
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 16px;
+        }
+
+        .card-subtitle {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             color: var(--gold);
-            font-size: 1.8rem;
-            margin-top: 0;
+            margin-bottom: 20px;
+            padding: 6px 14px;
+            background: rgba(246, 166, 35, 0.1);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .framework-card:nth-child(2) .card-subtitle {
+            color: var(--amber);
+            background: rgba(232, 93, 4, 0.1);
+        }
+
+        .framework-card:nth-child(3) .card-subtitle {
+            color: var(--teal);
+            background: rgba(20, 184, 166, 0.1);
+        }
+
+        .card-text {
+            font-size: 1.05rem;
+            color: var(--muted);
+            line-height: 1.9;
+        }
+
+        /* Roadmap Section */
+        .roadmap-section {
+            background: 
+                linear-gradient(180deg, transparent 0%, rgba(20, 184, 166, 0.03) 30%, rgba(246, 166, 35, 0.03) 70%, transparent 100%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='150' viewBox='0 0 84 150'%3E%3Cg fill='none' stroke='%23F6A623' stroke-width='0.5'%3E%3Cpath d='M42 0L84 25v50L42 100 0 75V25L42 0z'/%3E%3Cpath d='M42 50L84 75v50l-42 25L0 125V75l42-25z'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: auto, 42px 75px;
+            padding: 140px 0;
         }
 
         .roadmap {
             position: relative;
-            padding: 50px 0;
+            padding-left: 80px;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--gold), var(--amber), var(--teal), var(--honey));
+            border-radius: 2px;
         }
 
         .roadmap-item {
+            position: relative;
+            padding-bottom: 70px;
+        }
+
+        .roadmap-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .roadmap-node {
+            position: absolute;
+            left: -66px;
+            top: 5px;
+            width: 36px;
+            height: 42px;
+            background: var(--charcoal);
+            border: 3px solid var(--gold);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            z-index: 2;
+            transition: all 0.4s ease;
+        }
+
+        .roadmap-item:hover .roadmap-node {
+            background: var(--gold);
+            box-shadow: 0 0 30px var(--gold), 0 0 60px rgba(246, 166, 35, 0.5);
+            transform: scale(1.15);
+        }
+
+        .roadmap-item:nth-child(2) .roadmap-node {
+            border-color: var(--amber);
+        }
+        .roadmap-item:nth-child(2):hover .roadmap-node {
+            background: var(--amber);
+            box-shadow: 0 0 30px var(--amber), 0 0 60px rgba(232, 93, 4, 0.5);
+        }
+
+        .roadmap-item:nth-child(3) .roadmap-node {
+            border-color: var(--teal);
+        }
+        .roadmap-item:nth-child(3):hover .roadmap-node {
+            background: var(--teal);
+            box-shadow: 0 0 30px var(--teal), 0 0 60px rgba(20, 184, 166, 0.5);
+        }
+
+        .roadmap-content {
+            background: linear-gradient(160deg, var(--charcoal) 0%, rgba(30, 30, 30, 0.8) 100%);
+            border-radius: 24px;
+            padding: 40px 45px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roadmap-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--gold), var(--amber));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .roadmap-item:hover .roadmap-content {
+            border-color: rgba(246, 166, 35, 0.25);
+            transform: translateX(15px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .roadmap-item:hover .roadmap-content::before {
+            opacity: 1;
+        }
+
+        .roadmap-item:nth-child(2):hover .roadmap-content {
+            border-color: rgba(232, 93, 4, 0.3);
+        }
+        .roadmap-item:nth-child(2) .roadmap-content::before {
+            background: linear-gradient(180deg, var(--amber), var(--deep-orange));
+        }
+
+        .roadmap-item:nth-child(3):hover .roadmap-content {
+            border-color: rgba(20, 184, 166, 0.3);
+        }
+        .roadmap-item:nth-child(3) .roadmap-content::before {
+            background: linear-gradient(180deg, var(--teal), var(--teal-dark));
+        }
+
+        .roadmap-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(246, 166, 35, 0.15);
+            border: 1px solid rgba(246, 166, 35, 0.3);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .roadmap-item:nth-child(2) .roadmap-badge {
+            background: rgba(232, 93, 4, 0.15);
+            border-color: rgba(232, 93, 4, 0.3);
+            color: var(--amber);
+        }
+
+        .roadmap-item:nth-child(3) .roadmap-badge {
+            background: rgba(20, 184, 166, 0.15);
+            border-color: rgba(20, 184, 166, 0.3);
+            color: var(--teal);
+        }
+
+        .roadmap-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 14px;
+        }
+
+        .roadmap-text {
+            font-size: 1.05rem;
+            color: var(--muted);
+            line-height: 1.9;
+        }
+
+        /* Capstone Special Styling */
+        .roadmap-item.capstone .roadmap-node {
+            width: 50px;
+            height: 58px;
+            left: -74px;
+            background: linear-gradient(135deg, var(--gold), var(--honey));
+            border: none;
+            box-shadow: 0 0 40px rgba(246, 166, 35, 0.5);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(246, 166, 35, 0.5); }
+            50% { box-shadow: 0 0 60px rgba(246, 166, 35, 0.8), 0 0 100px rgba(255, 186, 8, 0.4); }
+        }
+
+        .roadmap-item.capstone .roadmap-content {
+            background: linear-gradient(160deg, rgba(246, 166, 35, 0.1) 0%, rgba(30, 30, 30, 0.95) 100%);
+            border-color: rgba(246, 166, 35, 0.35);
+        }
+
+        .roadmap-item.capstone .roadmap-badge {
+            background: linear-gradient(135deg, var(--gold), var(--amber));
+            border: none;
+            color: var(--black);
+        }
+
+        /* Discussion Section */
+        .discussion-section {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, var(--charcoal) 0%, var(--black) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .discussion-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .discussion-header {
+            text-align: center;
             margin-bottom: 60px;
-            padding-left: 40px;
-            border-left: 2px solid var(--gold);
+        }
+
+        .discussion-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(220, 47, 2, 0.15);
+            border: 1px solid rgba(220, 47, 2, 0.3);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--deep-orange);
+            margin-bottom: 20px;
+        }
+
+        .discussion-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 16px;
+        }
+
+        .discussion-subtitle {
+            font-size: 1.1rem;
+            color: var(--muted);
+        }
+
+        .discussion-questions {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .question-card {
+            background: linear-gradient(160deg, var(--slate) 0%, var(--charcoal) 100%);
+            border-radius: 20px;
+            padding: 32px 36px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gold);
+            transition: all 0.3s ease;
+        }
+
+        .question-card:nth-child(2)::before { background: var(--amber); }
+        .question-card:nth-child(3)::before { background: var(--teal); }
+        .question-card:nth-child(4)::before { background: var(--honey); }
+
+        .question-card:hover {
+            transform: translateX(10px);
+            border-color: rgba(246, 166, 35, 0.2);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .question-card:nth-child(1):hover { border-color: rgba(246, 166, 35, 0.3); }
+        .question-card:nth-child(2):hover { border-color: rgba(232, 93, 4, 0.3); }
+        .question-card:nth-child(3):hover { border-color: rgba(20, 184, 166, 0.3); }
+        .question-card:nth-child(4):hover { border-color: rgba(255, 186, 8, 0.3); }
+
+        .question-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .question-card:nth-child(1) .question-number { color: var(--gold); }
+        .question-card:nth-child(2) .question-number { color: var(--amber); }
+        .question-card:nth-child(3) .question-number { color: var(--teal); }
+        .question-card:nth-child(4) .question-number { color: var(--honey); }
+
+        .question-text {
+            font-size: 1.15rem;
+            color: var(--cream);
+            line-height: 1.7;
+        }
+
+        .question-context {
+            font-size: 0.95rem;
+            color: var(--muted);
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background: var(--black);
             position: relative;
         }
 
-        .roadmap-item::before {
+        footer::before {
             content: '';
             position: absolute;
-            left: -11px;
             top: 0;
-            width: 20px;
-            height: 20px;
-            background: var(--gold);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--gold);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--teal), var(--amber));
+            border-radius: 2px;
         }
 
-        .quarter {
-            font-weight: 800;
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .footer-text {
+            font-size: 1rem;
             color: var(--gold);
-            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 1px;
         }
 
-        .footer {
-            padding: 50px;
-            text-align: center;
-            background: #111;
-            font-size: 0.9rem;
-            color: #666;
+        .footer-credit {
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: var(--muted);
         }
 
-        .badge {
-            display: inline-block;
-            padding: 5px 15px;
-            background: var(--dark-amber);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-bottom: 10px;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section {
+                padding: 100px 20px;
+            }
+
+            header::before {
+                width: 350px;
+                height: 404px;
+            }
+
+            .branson-pills {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .branson-divider {
+                transform: rotate(90deg);
+            }
+
+            .framework-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .honey-flows {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .honey-flow-item {
+                max-width: 100%;
+            }
+
+            .roadmap {
+                padding-left: 50px;
+            }
+
+            .roadmap::before {
+                left: 16px;
+            }
+
+            .roadmap-node {
+                left: -44px;
+                width: 28px;
+                height: 32px;
+            }
+
+            .roadmap-item.capstone .roadmap-node {
+                left: -48px;
+                width: 36px;
+                height: 42px;
+            }
+
+            .quote-container {
+                padding: 35px 25px;
+            }
+
+            .quote-text {
+                font-size: 1.4rem;
+            }
+
+            .question-card {
+                padding: 24px;
+            }
+        }
+
+        /* Scroll reveal animation class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
+    <div class="honeycomb-bg"></div>
+    <div class="gradient-mesh"></div>
+    
+    <div class="floating-hexagons">
+        <div class="hex"></div>
+        <div class="hex"></div>
+        <div class="hex"></div>
+        <div class="hex"></div>
+        <div class="hex"></div>
+        <div class="hex"></div>
+        <div class="hex"></div>
+        <div class="hex"></div>
+    </div>
 
     <header>
-        <div class="hero-subtitle">ABC Home & Commercial Services</div>
-        <h1 class="hero-title">The Hive and the Honey</h1>
-        <p style="font-size: 1.2rem; margin-top: 20px;">2026 Manager Development Series</p>
+        <div class="hero-badge">
+            <span>ABC Home & Commercial Services</span>
+        </div>
+
+        <div class="branson-banner">
+            <div class="branson-pills">
+                <span class="branson-pill">Staff First</span>
+                <span class="branson-divider">→</span>
+                <span class="branson-pill">Customers Second</span>
+                <span class="branson-divider">→</span>
+                <span class="branson-pill">Shareholders Last</span>
+            </div>
+            <p class="branson-credit">Sir Richard Branson</p>
+        </div>
         
-        <div class="quote-box">
-            "The purpose of a beehive is NOT to make honey. Honey is the byproduct of a healthy hive." <br>
-            <span style="font-style: normal; font-weight: bold; color: var(--gold);">— Seth Godin</span>
+        <h1 class="hero-title">The Hive<br>and the Honey</h1>
+        
+        <p class="hero-subtitle"><span>2026</span> Leadership Development Series</p>
+        
+        <div class="quote-container">
+            <p class="quote-text">The purpose of a beehive is not to make honey. Honey is the byproduct of a healthy hive.</p>
+            <p class="quote-author">Seth Godin, The Song of Significance</p>
         </div>
     </header>
 
-    <section class="section">
-        <h2>The Framework of Flourishing</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Customer Service</h3>
-                <p>The act of providing technical assistance. It is the baseline duty. We treat every home with the dignity and stewardship it deserves.</p>
+    <!-- Honey Definition Section -->
+    <section class="honey-definition">
+        <span class="section-label reveal">The Meaning</span>
+        <h2 class="section-title reveal" style="text-align: center;">What is the Honey?</h2>
+        
+        <p class="honey-tagline reveal"><em>Honey is the sweetness we create</em> — for our customers, our teams, ourselves, and our future.</p>
+        
+        <div class="honey-flows">
+            <div class="honey-flow-item reveal">
+                <h3 class="honey-flow-title">To the Customer</h3>
+                <p class="honey-flow-text">Sweet experiences. The "wow" moments. The relief when something just works. The stories they tell their neighbors.</p>
             </div>
-            <div class="card">
-                <h3>Customer Experience</h3>
-                <p>The sum of all "Moments of Magic" versus "Moments of Misery." We remove friction so our service feels effortless for the customer.</p>
+            <div class="honey-flow-item reveal">
+                <h3 class="honey-flow-title">To the Team</h3>
+                <p class="honey-flow-text">Fulfillment. Pride in craft. The feeling of being part of something meaningful. "I helped that family."</p>
             </div>
-            <div class="card">
-                <h3>Customer Success</h3>
-                <p>The byproduct of a healthy hive. When our Brand Promise is kept, the customer flourishes, and we leave a lasting legacy.</p>
+            <div class="honey-flow-item reveal">
+                <h3 class="honey-flow-title">To Ourselves</h3>
+                <p class="honey-flow-text">Growth. Purpose. The satisfaction of doing work that matters. Becoming the person we're meant to be.</p>
+            </div>
+            <div class="honey-flow-item reveal">
+                <h3 class="honey-flow-title">To the Business</h3>
+                <p class="honey-flow-text">Profitability. Growth. Sustainability. The resources to keep investing in the hive and our people.</p>
             </div>
         </div>
     </section>
 
     <section class="section">
-        <h2>2026 Roadmap</h2>
-        <div class="roadmap">
+        <span class="section-label reveal">The Philosophy</span>
+        <h2 class="section-title reveal">The Framework of Flourishing</h2>
+        <p class="section-intro reveal">Business is a tool for human flourishing. Serving the customer is not a transaction; it is a high privilege and a covenant to leave a legacy of meaning.</p>
+        
+        <div class="framework-grid">
+            <div class="framework-card reveal">
+                <span class="card-number">01</span>
+                <p class="card-subtitle">The Baseline</p>
+                <h3 class="card-title">Customer Service</h3>
+                <p class="card-text">The act of providing technical assistance. It is the baseline duty. We treat every home with the dignity and stewardship it deserves.</p>
+            </div>
             
-            <div class="roadmap-item">
-                <div class="badge">FEBRUARY KICKOFF</div>
-                <div class="quarter">The Covenant</div>
-                <p>Establishing the Brand Promise as our North Star. Bridging the gap from internal health to external excellence.</p>
+            <div class="framework-card reveal">
+                <span class="card-number">02</span>
+                <p class="card-subtitle">The Journey</p>
+                <h3 class="card-title">Customer Experience</h3>
+                <p class="card-text">The sum of all "Moments of Magic" versus "Moments of Misery." We remove friction so our service feels effortless for the customer.</p>
             </div>
-
-            <div class="roadmap-item">
-                <div class="badge">Q1 | 2-HOUR SESSION</div>
-                <div class="quarter">Perfecting the Comb</div>
-                <p>Internal Accountability. How dispatch, sales, and technicians serve one another as internal customers to ensure a seamless journey.</p>
+            
+            <div class="framework-card reveal">
+                <span class="card-number">03</span>
+                <p class="card-subtitle">The Harvest</p>
+                <h3 class="card-title">Customer Success</h3>
+                <p class="card-text">The byproduct of a healthy hive. When our Brand Promise is kept, the customer flourishes, and we leave a lasting legacy.</p>
             </div>
-
-            <div class="roadmap-item">
-                <div class="badge">Q2 | 2-HOUR SESSION</div>
-                <div class="quarter">The Pollination</div>
-                <p>Treating every home visit as a flourishing opportunity. Using the Shep Hyken "Moment of Magic" framework to transform standard service.</p>
-            </div>
-
-            <div class="roadmap-item">
-                <div class="badge">Q3 | 2-HOUR SESSION</div>
-                <div class="quarter">Protecting the Hive</div>
-                <p>Healthy Conflict & Radical Candor. Holding the team accountable to the Brand Promise while maintaining our culture of care.</p>
-            </div>
-
-            <div class="roadmap-item" style="border-left: 2px dashed var(--gold);">
-                <div class="badge">Q4 | ONE-DAY CAPSTONE</div>
-                <div class="quarter">The Honey Harvest</div>
-                <p>The Grand Celebration. Reviewing Legacy Moments where accountability led to profound customer success and employee fulfillment.</p>
-            </div>
-
         </div>
     </section>
 
-    <section class="section" style="text-align: center; border-top: 1px solid #333;">
-        <h2>The Branson Formula</h2>
-        <p style="font-size: 1.5rem; color: var(--gold);">Staff First &bull; Customers Second &bull; Shareholders Last</p>
-        <p style="max-width: 800px; margin: 20px auto;">By investing in the health, safety, and engagement of our Hive, we ensure the Honey is of the highest quality for our community.</p>
+    <section class="section roadmap-section">
+        <span class="section-label reveal">The Journey</span>
+        <h2 class="section-title reveal">2026 Roadmap</h2>
+        <p class="section-intro reveal">A year-long commitment to accountability, excellence, and human flourishing.</p>
+        
+        <div class="roadmap">
+            <div class="roadmap-item reveal">
+                <div class="roadmap-node"></div>
+                <div class="roadmap-content">
+                    <span class="roadmap-badge">February Kickoff</span>
+                    <h3 class="roadmap-title">Perfecting the Comb</h3>
+                    <p class="roadmap-text">Establishing the Brand Promise as our North Star and living up to it internally first. How dispatch, sales, technicians, and everyone else along the way serve one another as internal customers to ensure a seamless journey. Building a culture of healthy accountability through caring personally while challenging directly.</p>
+                </div>
+            </div>
+
+            <div class="roadmap-item reveal">
+                <div class="roadmap-node"></div>
+                <div class="roadmap-content">
+                    <span class="roadmap-badge">Q2 Session</span>
+                    <h3 class="roadmap-title">The Pollination</h3>
+                    <p class="roadmap-text">Treating every home visit as a flourishing opportunity. Using the Shep Hyken "Moment of Magic" framework to transform standard service into memorable experiences. What does effortless feel like for our customers? Identifying and eliminating the friction points we control.</p>
+                </div>
+            </div>
+
+            <div class="roadmap-item reveal">
+                <div class="roadmap-node"></div>
+                <div class="roadmap-content">
+                    <span class="roadmap-badge">Q3 Session</span>
+                    <h3 class="roadmap-title">The Sweetness We Leave Behind</h3>
+                    <p class="roadmap-text">Legacy and advocacy. How do we turn satisfied customers into advocates who tell our story? Empowerment to say yes, treating every individual with dignity, and recovering gracefully when things go wrong. This is about the aftertaste — what lingers after we leave.</p>
+                </div>
+            </div>
+
+            <div class="roadmap-item capstone reveal">
+                <div class="roadmap-node"></div>
+                <div class="roadmap-content">
+                    <span class="roadmap-badge">Q4 Capstone — Marble Falls</span>
+                    <h3 class="roadmap-title">The Honey Harvest</h3>
+                    <p class="roadmap-text">The Annual Manager's Training in Marble Falls, TX. Three sessions across Tuesday and Wednesday bringing Austin, Dallas, and Houston together under one roof. Content that builds on the year's foundation, cross-market collaboration on best practices, and storytelling sessions where teams share what they implemented and what worked. This is where we harvest the stories that define who we are.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <div class="footer">
-        &copy; 2026 ABC Home & Commercial Services | Curated by [Your Name]
-    </div>
+    <!-- For Discussion Section -->
+    <section class="discussion-section">
+        <div class="discussion-container">
+            <div class="discussion-header">
+                <span class="discussion-badge">For Discussion</span>
+                <h2 class="discussion-title">Questions for the Ownership Group</h2>
+                <p class="discussion-subtitle">To help shape the 2026 curriculum, I'd love your input on the following:</p>
+            </div>
+            
+            <div class="discussion-questions">
+                <div class="question-card reveal">
+                    <p class="question-number">Question 1</p>
+                    <p class="question-text">What do our managers struggle with most — internal handoffs or external delivery?</p>
+                    <p class="question-context">If it's internal, we lean Q1 heavier. If it's external, Q2 and Q3 need more depth.</p>
+                </div>
+                
+                <div class="question-card reveal">
+                    <p class="question-number">Question 2</p>
+                    <p class="question-text">What's the biggest gap between your Brand Promise and your actual customer experience?</p>
+                    <p class="question-context">That gap tells us where to focus Q2 and Q3 content.</p>
+                </div>
+                
+                <div class="question-card reveal">
+                    <p class="question-number">Question 3</p>
+                    <p class="question-text">What do we want them to be able to DO differently by Q4?</p>
+                    <p class="question-context">We'll work backward from that skill or behavior to design each quarter.</p>
+                </div>
+                
+                <div class="question-card reveal">
+                    <p class="question-number">Question 4</p>
+                    <p class="question-text">Are there any specific books, frameworks, videos, or "hooks" you've used in the past that your teams have loved — beyond what we've introduced in previous trainings?</p>
+                    <p class="question-context">We can anchor each quarter to the resources that resonate most with your culture.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <footer>
+        <div class="footer-logo">ABC Home & Commercial Services</div>
+        <p class="footer-text">2026 Leadership Development Series</p>
+        <p class="footer-credit">Curated by Brian Audia</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Parallax effect for floating hexagons
+        document.addEventListener('mousemove', (e) => {
+            const hexagons = document.querySelectorAll('.hex');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            hexagons.forEach((hex, i) => {
+                const speed = (i + 1) * 0.5;
+                const xOffset = (x - 0.5) * speed * 30;
+                const yOffset = (y - 0.5) * speed * 30;
+                hex.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+        });
+    </script>
 </body>
 </html>
