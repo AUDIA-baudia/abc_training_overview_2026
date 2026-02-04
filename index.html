@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hive and the Honey | ABC 2026 Vision</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #FFC107;
+            --dark-amber: #B45309;
+            --hive-black: #1A1A1A;
+            --soft-white: #F9FAFB;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--hive-black);
+            color: var(--soft-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #2c2c2c 0%, #1a1a1a 100%);
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            margin: 0;
+            background: linear-gradient(to right, var(--gold), #FFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 10px;
+            color: var(--gold);
+        }
+
+        .quote-box {
+            margin-top: 50px;
+            max-width: 700px;
+            font-style: italic;
+            border-left: 3px solid var(--gold);
+            padding-left: 20px;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+
+        .section {
+            padding: 100px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+        }
+
+        .card h3 {
+            color: var(--gold);
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+
+        .roadmap {
+            position: relative;
+            padding: 50px 0;
+        }
+
+        .roadmap-item {
+            margin-bottom: 60px;
+            padding-left: 40px;
+            border-left: 2px solid var(--gold);
+            position: relative;
+        }
+
+        .roadmap-item::before {
+            content: '';
+            position: absolute;
+            left: -11px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        .quarter {
+            font-weight: 800;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        .footer {
+            padding: 50px;
+            text-align: center;
+            background: #111;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: var(--dark-amber);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="hero-subtitle">ABC Home & Commercial Services</div>
+        <h1 class="hero-title">The Hive and the Honey</h1>
+        <p style="font-size: 1.2rem; margin-top: 20px;">2026 Manager Development Series</p>
+        
+        <div class="quote-box">
+            "The purpose of a beehive is NOT to make honey. Honey is the byproduct of a healthy hive." <br>
+            <span style="font-style: normal; font-weight: bold; color: var(--gold);">— Seth Godin</span>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2>The Framework of Flourishing</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Customer Service</h3>
+                <p>The act of providing technical assistance. It is the baseline duty. We treat every home with the dignity and stewardship it deserves.</p>
+            </div>
+            <div class="card">
+                <h3>Customer Experience</h3>
+                <p>The sum of all "Moments of Magic" versus "Moments of Misery." We remove friction so our service feels effortless for the customer.</p>
+            </div>
+            <div class="card">
+                <h3>Customer Success</h3>
+                <p>The byproduct of a healthy hive. When our Brand Promise is kept, the customer flourishes, and we leave a lasting legacy.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>2026 Roadmap</h2>
+        <div class="roadmap">
+            
+            <div class="roadmap-item">
+                <div class="badge">FEBRUARY KICKOFF</div>
+                <div class="quarter">The Covenant</div>
+                <p>Establishing the Brand Promise as our North Star. Bridging the gap from internal health to external excellence.</p>
+            </div>
+
+            <div class="roadmap-item">
+                <div class="badge">Q1 | 2-HOUR SESSION</div>
+                <div class="quarter">Perfecting the Comb</div>
+                <p>Internal Accountability. How dispatch, sales, and technicians serve one another as internal customers to ensure a seamless journey.</p>
+            </div>
+
+            <div class="roadmap-item">
+                <div class="badge">Q2 | 2-HOUR SESSION</div>
+                <div class="quarter">The Pollination</div>
+                <p>Treating every home visit as a flourishing opportunity. Using the Shep Hyken "Moment of Magic" framework to transform standard service.</p>
+            </div>
+
+            <div class="roadmap-item">
+                <div class="badge">Q3 | 2-HOUR SESSION</div>
+                <div class="quarter">Protecting the Hive</div>
+                <p>Healthy Conflict & Radical Candor. Holding the team accountable to the Brand Promise while maintaining our culture of care.</p>
+            </div>
+
+            <div class="roadmap-item" style="border-left: 2px dashed var(--gold);">
+                <div class="badge">Q4 | ONE-DAY CAPSTONE</div>
+                <div class="quarter">The Honey Harvest</div>
+                <p>The Grand Celebration. Reviewing Legacy Moments where accountability led to profound customer success and employee fulfillment.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section" style="text-align: center; border-top: 1px solid #333;">
+        <h2>The Branson Formula</h2>
+        <p style="font-size: 1.5rem; color: var(--gold);">Staff First &bull; Customers Second &bull; Shareholders Last</p>
+        <p style="max-width: 800px; margin: 20px auto;">By investing in the health, safety, and engagement of our Hive, we ensure the Honey is of the highest quality for our community.</p>
+    </section>
+
+    <div class="footer">
+        &copy; 2026 ABC Home & Commercial Services | Curated by [Your Name]
+    </div>
+
+</body>
+</html>
